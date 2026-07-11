@@ -259,4 +259,25 @@ Backend Ledger Team
   await sendEmail(userEmail, subject, text, html);
 };
 
-export default sendRegistrationEmail;
+const sendTransactionEmail = async (userEmail, name, amount, toAccount) => {
+  const subject = `Transfer Confirmation - ${toAccount}`;
+  const text = `Hello ${name}, your transfer of ${amount} to ${toAccount} has been processed successfully.`;
+  const html = `
+    <p>Hello <strong>${name}</strong>,</p>
+    <p>Your transfer of ${amount} to ${toAccount} has been processed successfully.</p>
+  `;
+  await sendEmail(userEmail, subject, text, html);
+};
+
+const sendFailedTransactionEmail = async (userEmail, name, amount, toAccount) => {
+  const subject = `Transfer Failed - ${toAccount}`;
+  const text = `Hello ${name}, your transfer of ${amount} to ${toAccount} has failed.`;
+  const html = `
+    <p>Hello <strong>${name}</strong>,</p>
+    <p>Your transfer of ${amount} to ${toAccount} has failed.</p>
+  `;
+  
+  await sendEmail(userEmail, subject, text, html);
+};
+
+export { sendRegistrationEmail, sendTransactionEmail, sendFailedTransactionEmail };
