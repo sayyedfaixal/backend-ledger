@@ -117,4 +117,8 @@ This project serves as a playground for exploring backend engineering concepts i
 
 ---
 
+## Database Design
 
+Below is the ER diagram for the MongoDB collections used in this project.
+
+![Database ER Diagram](image.png)
