@@ -1,6 +1,11 @@
 import userModel from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 
+/**
+ * - Verifies JWT from cookie or Authorization header
+ * - Attaches authenticated user to req.user
+ * - Protected Route Middleware
+ */
 const authMiddleware = async (req, res, next) => {
   const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
   if (!token) {
@@ -23,6 +28,11 @@ const authMiddleware = async (req, res, next) => {
 };
 
 
+/**
+ * - Ensures the authenticated user is a system user
+ * - Must be used after authMiddleware
+ * - Protected Route Middleware
+ */
 const systemUserMiddleware = async (req, res, next)=>{
   const user = req.user;
   if (!user || !user.systemUser) {

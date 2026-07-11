@@ -5,35 +5,10 @@ import { sendTransactionEmail, sendFailedTransactionEmail } from "../services/em
 import accountModel from "../models/account.model.js";
 
 /**
- * Create a new transaction
- * The TRANSFER flow
- * 
- * Validation Steps:
- * 1. Validate request body (fromAccount, toAccount, amount, idempotencyKey)
- * 2. Validate fromAccount !== toAccount (no self-transfer)
- * 3. Validate amount is positive number
- * 4. Validate idempotency key (check for duplicate transaction)
- * 5. Validate fromAccount exists
- * 6. Validate toAccount exists
- * 7. Validate fromAccount status is ACTIVE
- * 8. Validate toAccount status is ACTIVE
- * 9. Validate currency match between accounts
- * 10. Derive sender balance from ledger
- * 11. Validate sufficient balance for transfer
- * 
- * Transaction Steps:
- * 12. Start MongoDB session
- * 13. Create transaction (PENDING)
- * 14. Create Debit entry for sender
- * 15. Create Credit entry for receiver
- * 16. Mark transaction COMPLETED
- * 17. Commit MongoDB session
- * 
- * Post-Transaction Steps:
- * 18. Send email notification to sender
- * 19. Send email notification to receiver
+ * - POST /api/transactions/
+ * - Create a new transfer transaction between two accounts
+ * - Protected Route
  */
-
 const createTransaction = async (req, res) => {
     const {fromAccount, toAccount, amount, idempotencyKey} = req.body;
 
@@ -47,6 +22,11 @@ const createTransaction = async (req, res) => {
     
 }
 
+/**
+ * - POST /api/transactions/system/initial-funds
+ * - Create an initial funds transaction from the system user to a target account
+ * - Protected Route (requires authMiddleware and systemUserMiddleware)
+ */
 const createInitialFundsTransaction = async (req, res) => {
     const {toAccount, amount, idempotencyKey} = req.body;
     

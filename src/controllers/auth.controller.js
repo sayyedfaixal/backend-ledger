@@ -2,10 +2,10 @@ import userModel from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { sendRegistrationEmail } from "../services/email.service.js";
 /**
- * User Registration Controller
- * POST /api/auth/register
+ * - POST /api/auth/register
+ * - Register a new user and return user data with JWT token
+ * - Public Route
  */
-
 async function userRegistrationController(req, res) {
   const { email, password, name } = req.body;
 

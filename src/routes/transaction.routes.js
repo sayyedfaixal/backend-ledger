@@ -4,6 +4,11 @@ import { authMiddleware, systemUserMiddleware } from "../middlewares/auth.middle
 
 const router = express.Router();
 
+/**
+ * - POST /api/transactions/system/initial-funds
+ * - Create an initial funds transaction from the system user account
+ * - Protected Route (requires authMiddleware and systemUserMiddleware)
+ */
 router.post("/system/initial-funds", authMiddleware, systemUserMiddleware, createInitialFundsTransaction);
 
 export default router;
