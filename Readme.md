@@ -117,6 +117,4 @@ This project serves as a playground for exploring backend engineering concepts i
 
 ---
 
-## Acknowledgements
 
-This project was initially inspired by the backend series by Hitesh Choudhary (Chai aur Code). The codebase has been extended independently with additional features and architectural improvements as part of my learning journey.
