@@ -1,6 +1,6 @@
 import userModel from "../models/user.model.js";
 import jwt from "jsonwebtoken";
-
+import sendRegistrationEmail from "../services/email.service.js";
 /**
  * User Registration Controller
  * POST /api/auth/register
@@ -30,7 +30,7 @@ async function userRegistrationController(req, res) {
 
   res.cookie("token", token);
 
-  return res.status(201).json({
+  res.status(201).json({
     user: {
       _id: user._id,
       name: user.name,
@@ -38,6 +38,9 @@ async function userRegistrationController(req, res) {
     },
     token: token,
   });
+
+  console.log("sending email function call");
+  await sendRegistrationEmail(user.email, user.name);
 }
 
 export default userRegistrationController;
