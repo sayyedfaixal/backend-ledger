@@ -2,8 +2,6 @@
 
 Backend Ledger is a backend-first personal finance platform built with Node.js, Express, and MongoDB. It focuses on building secure, scalable backend services while exploring production-ready engineering practices.
 
-The project started as a learning exercise inspired by the Chai aur Code backend series and has since evolved into an independent project where new features, architectural improvements, and engineering practices are continuously added.
-
 ---
 
 ## Features
@@ -119,6 +117,4 @@ This project serves as a playground for exploring backend engineering concepts i
 
 ---
 
-## Acknowledgements
 
-This project was initially inspired by the backend series by Hitesh Choudhary (Chai aur Code). The codebase has been extended independently with additional features and architectural improvements as part of my learning journey.
