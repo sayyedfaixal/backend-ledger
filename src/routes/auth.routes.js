@@ -5,6 +5,7 @@ import {
   logoutController,
 } from "../controllers/auth.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
+import { asyncHandler } from "../utils/api.utils.js";
 
 const router = express.Router();
 
@@ -22,20 +23,20 @@ router.get("/hello", (req, res) => {
  * - Register a new user
  * - Public Route
  */
-router.post("/register", userRegistrationController);
+router.post("/register", asyncHandler(userRegistrationController));
 
 /**
  * - POST /api/auth/login
  * - Authenticate an existing user
  * - Public Route
  */
-router.post("/login", loginController);
+router.post("/login", asyncHandler(loginController));
 
 /**
  * - POST /api/auth/logout
  * - Log out the authenticated user by blacklisting the token
  * - Protected Route
  */
-router.post("/logout", authMiddleware, logoutController);
+router.post("/logout", authMiddleware, asyncHandler(logoutController));
 
 export default router;

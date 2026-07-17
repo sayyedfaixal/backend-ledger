@@ -6,6 +6,7 @@ import accountRouter from "./routes/account.routes.js";
 import transactionRouter from "./routes/transaction.routes.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./config/swagger.js";
+import errorMiddleware from "./middlewares/error.middleware.js";
 
 const app = express();
 
@@ -17,5 +18,7 @@ app.use("/api/accounts", accountRouter);
 app.use("/api/transactions", transactionRouter);
 
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.use(errorMiddleware);
 
 export default app;
