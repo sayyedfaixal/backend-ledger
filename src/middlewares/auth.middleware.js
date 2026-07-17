@@ -1,4 +1,5 @@
 import userModel from "../models/user.model.js";
+import tokenBlackListModel from "../models/blacklist.models.js";
 import jwt from "jsonwebtoken";
 
 /**
@@ -15,6 +16,12 @@ const authMiddleware = async (req, res, next) => {
   }
 
   try {
+    const isBlacklisted = await tokenBlackListModel.findOne({ token });
+    if (isBlacklisted) {
+      return res.status(401).json({
+        message: "Unauthorised access, token has been revoked",
+      });
+    }
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     /**
      * Selecting SystemUser field as it was given false under select: false, in the schema
@@ -23,6 +30,7 @@ const authMiddleware = async (req, res, next) => {
     const user = await userModel.findById(decodedToken.userId).select("+systemUser");
 
     req.user = user;
+    req.token = token;
     return next();
   } catch (error) {
     return res.status(401).json({

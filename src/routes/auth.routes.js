@@ -1,5 +1,11 @@
 import express from "express";
-import { userRegistrationController, loginController } from "../controllers/auth.controller.js";
+import {
+  userRegistrationController,
+  loginController,
+  logoutController,
+} from "../controllers/auth.controller.js";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
+
 const router = express.Router();
 
 /**
@@ -24,5 +30,12 @@ router.post("/register", userRegistrationController);
  * - Public Route
  */
 router.post("/login", loginController);
+
+/**
+ * - POST /api/auth/logout
+ * - Log out the authenticated user by blacklisting the token
+ * - Protected Route
+ */
+router.post("/logout", authMiddleware, logoutController);
 
 export default router;

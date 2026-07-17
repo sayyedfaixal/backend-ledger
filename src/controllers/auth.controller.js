@@ -1,4 +1,5 @@
 import userModel from "../models/user.model.js";
+import tokenBlackListModel from "../models/blacklist.models.js";
 import jwt from "jsonwebtoken";
 import { sendRegistrationEmail } from "../services/email.service.js";
 /**
@@ -92,4 +93,30 @@ async function loginController(req, res) {
   });
 }
 
-export { userRegistrationController, loginController };
+async function logoutController(req, res) {
+  const token = req.token || req.cookies.token || req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    return res.status(400).json({
+      message: "Token is required to logout",
+    });
+  }
+
+  try {
+    await tokenBlackListModel.create({ token });
+  } catch (error) {
+    if (error.code !== 11000) {
+      console.error("Error blacklisting token", error);
+      return res.status(500).json({
+        message: "Unable to logout right now",
+      });
+    }
+  }
+
+  res.clearCookie("token");
+  return res.status(200).json({
+    message: "Logged out successfully",
+  });
+}
+
+export { userRegistrationController, loginController, logoutController };
