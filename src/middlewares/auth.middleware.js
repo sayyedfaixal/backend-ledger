@@ -16,6 +16,10 @@ const authMiddleware = async (req, res, next) => {
 
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    /**
+     * Selecting SystemUser field as it was given false under select: false, in the schema
+     * So we need to explicitly select it
+    */
     const user = await userModel.findById(decodedToken.userId).select("+systemUser");
 
     req.user = user;
@@ -33,7 +37,7 @@ const authMiddleware = async (req, res, next) => {
  * - Must be used after authMiddleware
  * - Protected Route Middleware
  */
-const systemUserMiddleware = async (req, res, next)=>{
+const systemUserMiddleware = async (req, res, next) => {
   const user = req.user;
   if (!user || !user.systemUser) {
     return res.status(403).json({

@@ -9,6 +9,6 @@ const router = express.Router();
  * - Create an initial funds transaction from the system user account
  * - Protected Route (requires authMiddleware and systemUserMiddleware)
  */
-router.post("/system/initial-funds", authMiddleware, systemUserMiddleware, createInitialFundsTransaction);
+router.post("/system/initial-funds", systemUserMiddleware, createInitialFundsTransaction);
 
 export default router;
